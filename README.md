@@ -18,7 +18,7 @@ Create a simple switched network consisting of two hosts connected through an Et
 | --- | --- |
 | PC1 | 192.168.2.128 |
 | PC2 | 192.168.2.129 |
-| Gateway | 192.168.2.1 |
+| Gateway | 192.168.2.2 |
 
 ## Configuration
 ### PC1
