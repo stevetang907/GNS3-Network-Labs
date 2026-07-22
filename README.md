@@ -55,8 +55,3 @@ Initial connectivity failed between subnets due to OpenWRT firewall zone isolati
 uci set firewall.@defaults[0].forward='ACCEPT'  
 uci commit firewall  
 /etc/init.d/firewall restart  
-
-## Lessons Learned
-- Subnet separation
-- Layer 3 forwarding
-- Router interface design
