@@ -53,6 +53,28 @@ The objective was to understand how routing tables scale as networks grow and ho
 | Router 3 | eth1 | 10.0.23.2/30 | 10.0.23.0/30 |
 | PC2	| NIC | 192.168.30.10/24 | 192.168.30.0/24 |
 
+## Static Routes
+### Router 1
+| Destination | Next Hop |
+| --- | --- |
+| 192.168.20.0/24 |	10.0.12.2 |
+| 192.168.30.0/24 |	10.0.12.2 |
+| 10.0.23.0/30 | 10.0.12.2 |
+
+### Router 2
+| Destination | Next Hop |
+| --- | --- |
+| 192.168.10.0/24 |	10.0.12.1 |
+| 192.168.30.0/24 |	10.0.23.2 |
+
+### Router 3
+| Destination | Next Hop |
+| --- | --- |
+| 192.168.20.0/24 |	10.0.23.1 |
+| 192.168.10.0/24 |	10.0.23.1 |
+| 10.0.12.0/30 | 10.0.23.1 |
+
+
 ## Configuration Summary
 ### Router 1
 <img width="876" height="558" alt="image" src="https://github.com/user-attachments/assets/7f4a5969-b172-470b-8120-f55c7e620d42" />
@@ -120,34 +142,12 @@ PC2 → PC1:
 
 ## Troubleshooting Notes
 
-Initial connectivity testing failed even though interface configuration and routing were correct.
+Only directly connected networks appeared in each routing table, preventing communication with remote LANs.  
 
-Troubleshooting steps performed:
+### Resolution  
 
-- Verified router interfaces using: ip addr
-- Verified routing tables using: ip route
-- Confirmed Layer 2 connectivity using ARP: arp -n
+Configured static routes on each router for all remote networks.
 
-The routers successfully learned each other's MAC addresses, confirming that the transit link was functioning.
-
-The issue was caused by the default OpenWrt firewall configuration. The firewall treated the transit interface (eth1) as a WAN interface and blocked routed traffic between networks.
-
-The issue was resolved by disabling the OpenWrt firewall:  
-
-/etc/init.d/firewall stop  
-/etc/init.d/firewall disable
-
-After disabling the firewall, all router and host connectivity tests passed.
-
-## Lessons Learned
-- Static routes allow communication between separate networks without a dynamic routing protocol.
-- Point-to-point links commonly use small subnets such as /30.
-- Successful ARP resolution confirms Layer 2 connectivity but does not guarantee Layer 3 communication.
-- Routing tables must contain a path to remote networks.
-- Firewalls can block traffic even when routing is correctly configured.
-- Troubleshooting should follow a layered approach:
-  - Layer 1: Link status
-  - Layer 2: ARP/MAC learning
-  - Layer 3: IP addressing and routing
-  - Layer 4+: Firewall and service behavior
+## Key Takeaways
+This lab demonstrated how static routing becomes increasingly complex as additional routers and networks are introduced. While static routes are suitable for small environments, larger enterprise networks typically rely on dynamic routing protocols such as RIP or OSPF to automatically exchange routing information.
 
