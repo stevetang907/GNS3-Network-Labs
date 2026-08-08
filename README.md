@@ -138,7 +138,7 @@ Determine the WAN interface status.
 ifstatus wan
 ```
 
-> **Insert Screenshot:** WAN Interface Information
+<img width="430" height="308" alt="image" src="https://github.com/user-attachments/assets/9bb80abb-de11-4399-a2cb-cdeebf5fed72" />
 
 Verify:
 
@@ -152,7 +152,7 @@ The WAN zone has an input policy of **REJECT**.
 
 **What does this mean from a security perspective?**
 
-> **Your Answer:**
+All incoming traffic originating from the internet or an external network is blocked by the firewall
 
 ---
 
@@ -164,19 +164,20 @@ Verify the firewall is performing source NAT.
 nft list ruleset | grep masquerade
 ```
 
-> **Insert Screenshot:** Masquerade Rule
+<img width="338" height="146" alt="image" src="https://github.com/user-attachments/assets/69bc8c9f-132c-48e6-81ff-e4092424fbf2" />
+
 
 ### Questions
 
 **Why is masquerading required for Internet access?**
 
-> **Your Answer:**
+Masquerading is required because home and office devices use private IP addresses that the public internet cannot route. It lets many devices share one public internet address by changing private source addresses into the router's public address
 
 ---
 
 **What would happen if masquerading were disabled?**
 
-> **Your Answer:**
+A device would not be able to access the Internet
 
 ---
 
@@ -189,7 +190,7 @@ service firewall enabled
 service frr enabled
 ```
 
-> **Insert Screenshot:** Services Enabled
+<img width="325" height="52" alt="image" src="https://github.com/user-attachments/assets/fb145261-cb47-4cd2-96ed-4d51632145e2" />
 
 ---
 
@@ -205,7 +206,7 @@ show ip ospf neighbor
 
 **Why is it important that OSPF neighbors remain in the FULL state after firewall configuration?**
 
-> **Your Answer:**
+It ensures all devices (routers) share an identical view of the network topology, allowing them to calculate valid, loop-free shortest paths and route traffic without unexpected black holes or drops
 
 ---
 
@@ -215,13 +216,14 @@ show ip ospf neighbor
 
 | Test | Result |
 |------|:------:|
-| PC1 → PC2 | ✅ / ❌ |
-| PC1 → PC3 | ✅ / ❌ |
-| PC1 → Internet | ✅ / ❌ |
-| PC2 → Internet | ✅ / ❌ |
-| PC3 → Internet | ✅ / ❌ |
+| PC1 → PC2 | ✅ |
+| PC1 → PC3 | ✅ |
+| PC1 → Internet | ✅ |
+| PC2 → Internet | ✅ |
+| PC3 → Internet | ✅ |
 
-> **Insert Screenshot:** Successful Internet Connectivity
+<img width="452" height="115" alt="image" src="https://github.com/user-attachments/assets/746b777a-f7fe-4ab9-a113-4be64bab6c77" />
+
 
 ---
 
@@ -231,11 +233,11 @@ show ip ospf neighbor
 
 **Problem:**
 
-> **Your Answer:**
+Routers 2 and 3's transit interfaces were not in a firewall zone, causing all ping tests to fail
 
 **Resolution:**
 
-> **Your Answer:**
+I added the transit interfaces to each router's LAN firewall zone
 
 ---
 
@@ -243,23 +245,11 @@ show ip ospf neighbor
 
 **Problem:**
 
-> **Your Answer:**
+After restarting the project, Routers 2 and 3 and the VPCS could not ping the internet
 
 **Resolution:**
 
-> **Your Answer:**
-
----
-
-## Issue 3 - Transit Interfaces Not Assigned to Firewall Zones
-
-**Problem:**
-
-> **Your Answer:**
-
-**Resolution:**
-
-> **Your Answer:**
+I restarted the firewall on Router 1, which allowed all the 8.8.8.8 ping tests to work again
 
 ---
 
