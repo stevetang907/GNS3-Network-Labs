@@ -257,25 +257,25 @@ I restarted the firewall on Router 1, which allowed all the 8.8.8.8 ping tests t
 
 ### Lesson 1
 
-> **Your Answer:**
+I learned how OpenWrt organizes firewall policies using security zones instead of configuring rules on individual interfaces. Grouping interfaces into zones simplifies firewall management and makes it easier to apply consistent security policies across trusted and untrusted networks.
 
 ---
 
 ### Lesson 2
 
-> **Your Answer:**
+I learned how the OpenWrt firewall configuration is translated into nftables rules by firewall4. Understanding the relationship between the UCI configuration, firewall4, nftables, and the Linux kernel helped me better understand how firewall policies are actually enforced on the router.
 
 ---
 
 ### Lesson 3
 
-> **Your Answer:**
+I learned that dynamic routing protocols such as OSPF depend on proper firewall configuration. When the router transit interfaces were not assigned to the trusted LAN zone, OSPF neighbors were unable to establish FULL adjacencies. Adding the transit interfaces to the appropriate firewall zone restored routing functionality while maintaining network security.
 
 ---
 
 ### Lesson 4
 
-> **Your Answer:**
+I learned how NAT (Masquerading) and firewall policies work together to provide secure Internet access. While the firewall controls which traffic is allowed to pass between zones, NAT translates private IP addresses so internal devices can communicate with external networks.
 
 ---
 
@@ -293,16 +293,4 @@ I restarted the firewall on Router 1, which allowed all the 8.8.8.8 ping tests t
 
 This lab demonstrated how the OpenWrt firewall protects an enterprise network while allowing legitimate traffic to pass. Firewall zones, forwarding policies, NAT, and stateful inspection were examined using the three-router enterprise topology developed throughout the previous labs. Additionally, troubleshooting the interaction between firewall zones and OSPF highlighted the importance of assigning router transit interfaces to trusted firewall zones when deploying dynamic routing protocols.
 
----
 
-# Suggested Screenshots
-
-- [ ] Complete GNS3 Topology
-- [ ] `uci show firewall.@zone[0]`
-- [ ] `uci show firewall.@zone[1]`
-- [ ] `fw4 print`
-- [ ] `nft list ruleset`
-- [ ] `nft list ruleset | grep masquerade`
-- [ ] `ifstatus wan`
-- [ ] `show ip ospf neighbor`
-- [ ] Successful Internet Ping from a VPCS
